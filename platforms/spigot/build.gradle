@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.0'
+}
+
+group = 'me.tofaa'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven {
+        url = "https://repo.papermc.io/repository/maven-public/"
+    }
+}
+
+dependencies {
+    compileOnly "io.papermc.paper:paper-api:1.20-R0.1-SNAPSHOT"
+    implementation project(':home-system-commons')
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+shadowJar {
+    archiveFileName.set('home-system-spigot.jar')
+}
+
+/** This is a test task for my convenience */
+tasks.register("testServer") {
+    dependsOn('shadowJar')
+    def jar = file('build/libs/home-system-spigot.jar')
+    def testServer = file('test-server/plugins')
+    doLast {
+        if (!testServer.exists()) {
+            testServer.mkdirs()
+        }
+        copy {
+            from jar
+            into testServer
+        }
+    }
+}
+
+
+

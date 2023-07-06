@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+    id 'java-library'
+}
+
+group = 'me.tofaa'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    api 'org.jetbrains:annotations:24.0.0'
+    api 'mysql:mysql-connector-java:8.0.33'
+    compileOnlyApi 'com.google.code.gson:gson:2.10.1' // Supports java records.
+    compileOnlyApi "net.kyori:adventure-text-minimessage:4.14.0"
+}
